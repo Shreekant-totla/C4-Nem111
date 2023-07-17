@@ -11,9 +11,13 @@ const { postRouter} = require("./controllers/post.routes");
 app.use(express.json());
 app.use(cors());
 
-// app.use("/users" , userRouter);
-// app.use("/posts",postRouter);
+app.use("/users" , userRouter);
+ app.use("/posts",authMiddleware, postRouter);
 // app.use("/posts" , authMiddleware);
+
+app.get("/",async (req,res)=>{
+    res.send("welcome to backend")
+})
 
 app.listen(process.env.PORT, async ()=> {
     try {
