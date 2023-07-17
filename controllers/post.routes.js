@@ -18,11 +18,23 @@ postRouter.post("/add", authMiddleware, async (req,res)=>{
     }
 });
 
-postRouter.get("/", async(req,res)=>{
-    const {userID} = req.body;
-
-const {device = ["PC", "TABLET", "MOBILE"]} = req.query
-})
+postRouter.get('/posts', async (req, res) => {
+    try {
+      const { device } = req.query;
+      const filter = {};
+  
+      if (device) {
+        filter.device = device;
+      }
+  
+      const posts = await PostModel.find(filter);
+  
+      res.json(posts);
+    } catch (error) {
+      console.error('Failed to fetch posts:', error);
+      res.status(500).json({ error: 'Failed to fetch posts' });
+    }
+  });
 
 
 //PATCH
